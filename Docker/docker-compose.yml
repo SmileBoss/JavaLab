@@ -1,0 +1,72 @@
+version: '3.1'
+
+services:
+
+  eureka-server:
+    container_name: eureka-server
+    image: eureka-server:0.1
+#    build:
+#      dockerfile: ../api.eureka.javalab.com/Dockerfile
+#      context: .
+    ports:
+      - 8761:8761
+    networks:
+      - javalab
+
+  gateway-service:
+    container_name: gateway-service
+    image: gateway-service:0.1
+#    build:
+#      dockerfile: ../api.gateway.javalab.com/Dockerfile
+#      context: .
+    ports:
+      - 8072:8072
+    networks:
+      - javalab
+
+  auth-service:
+    container_name: auth-service
+    image: auth-service:0.1
+#    build:
+#      dockerfile: ../api.auth.javalab.com/Dockerfile
+#      context: .
+    ports:
+      - 8800:8800
+    networks:
+      - javalab
+
+  generator-service:
+    container_name: generator-service
+    image: generator-service:0.1
+#    build:
+#      dockerfile: ../api.generator.javalab.com/Dockerfile
+#      context: .
+    ports:
+      - 9080:9080
+    networks:
+      - javalab
+
+  postgres:
+    image: postgres:10.17
+    platform: linux/arm64/v8
+    container_name: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_HOST_NAME: postgres
+      POSTGRES_PORT: 5432
+    ports:
+      - 5432:5432
+    networks:
+      - javalab
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - javalab
+
+networks:
+  javalab:

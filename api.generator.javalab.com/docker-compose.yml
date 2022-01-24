@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  postgres:
+    image: postgres:10.17
+    platform: linux/arm64/v8
+    container_name: postgres-generator
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DATABASES: "generator"
+      POSTGRES_HOST_NAME: postgres
+      POSTGRES_PORT: 5432
+    ports:
+      - 5435:5432

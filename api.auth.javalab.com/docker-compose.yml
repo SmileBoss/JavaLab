@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+
+  app:
+    container_name: "auth-service"
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 8800:8800
+
+  postgres:
+    image: postgres:10.17
+    platform: linux/arm64/v8
+    container_name: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+#      POSTGRES_DATABASES: "users"
+      POSTGRES_HOST_NAME: postgres
+      POSTGRES_PORT: 5432
+    ports:
+      - 5432:5432
